@@ -1,0 +1,17 @@
+communication:
+  description: >
+    Respond to the user's message: {user_message}.
+    Users Current State : {user_state}
+    memory related to current user message : {memory}
+    Use the provided conversation history :  {context},
+    Based on User state and Context understand the studnet need or waht to commincate in this stage, provide the relevant response to the user.
+    
+
+  expected_output: >
+    Your output should be a relevant to users Current State and Context, and should be engaging and helpful to the user.
+    also Return IF There is Any Update In user state.
+  
+  agent: communication
+
+
+

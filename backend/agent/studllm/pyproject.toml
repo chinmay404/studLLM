@@ -1,0 +1,20 @@
+[project]
+name = "studllm"
+version = "0.1.0"
+description = "studLLM using crewAI"
+authors = [{ name = "chinmaypisal45@gmail.com", email = "chinmaypisal45@gmail.com" }]
+requires-python = ">=3.10,<=3.13"
+dependencies = [
+    "crewai[tools]>=0.86.0,<1.0.0"
+]
+
+[project.scripts]
+studllm = "studllm.main:run"
+run_crew = "studllm.main:run"
+train = "studllm.main:train"
+replay = "studllm.main:replay"
+test = "studllm.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
