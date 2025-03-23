@@ -7,11 +7,11 @@ graph = getGraphResponse()
 router = APIRouter()
 
 @router.post("/chat")
-async def chat(request: ChatRequest):
+async def chat(request: ChatRequest ):
     try:
         query = request.message
-        config = {"configurable": {"thread_id": "1231"}}       # This is a dummy config in actual implementation this will be dynamic and based on the user
-        responset = graph.get_response(query , config)
+        config = {"configurable": {"thread_id":request.user_id}}      
+        responset = graph.get_response(query , config ,request.user_id )
         try:
             response_text = responset.content
             message = response_text.split("</think>")[1]

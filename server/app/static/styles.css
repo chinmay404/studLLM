@@ -11,6 +11,7 @@ body {
     color: #1a1a1a;
     height: 100vh;
     overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* App container */
@@ -28,16 +29,17 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, color 0.3s ease;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     position: fixed;
     z-index: 100;
     transform: translateX(-100%);
-    /* Hidden by default */
+    /* Hidden by default on mobile */
 }
 
 .sidebar--open {
     transform: translateX(0);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar__header {
@@ -45,25 +47,57 @@ body {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.user-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-email {
+    font-size: 12px;
+    color: #666;
+}
+
 .new-chat-btn {
     width: 100%;
-    padding: 12px;
+    padding: 10px 12px;
     background-color: #f0f2f5;
     color: #1a1a1a;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     font-size: 14px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
     font-weight: 500;
 }
 
 .new-chat-btn:hover {
     background-color: #e4e6e9;
+}
+
+.new-chat-btn:active {
+    transform: scale(0.98);
 }
 
 .sidebar__conversations {
@@ -73,24 +107,33 @@ body {
 }
 
 .conversation-item {
-    padding: 10px;
-    border-radius: 6px;
+    padding: 10px 12px;
+    border-radius: 8px;
     margin-bottom: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 14px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 .conversation-item:hover {
     background-color: #f0f2f5;
 }
 
+.conversation-item:active {
+    transform: scale(0.98);
+}
+
 .conversation-item--active {
-    background-color: #f0f2f5;
+    background-color: #e7f0ff;
     font-weight: 500;
+    color: #0084ff;
+}
+
+.conversation-item--active i {
+    color: #0084ff;
 }
 
 .sidebar__footer {
@@ -99,26 +142,43 @@ body {
 }
 
 .theme-toggle,
-.user-profile {
-    padding: 10px;
+.profile-menu li {
+    padding: 10px 12px;
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 14px;
     cursor: pointer;
-    border-radius: 6px;
+    border-radius: 8px;
     transition: background-color 0.2s;
 }
 
 .theme-toggle:hover,
-.user-profile:hover {
+.profile-menu li:hover {
     background-color: #f0f2f5;
 }
 
-.user-profile img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
+.profile-section {
+    margin-top: 16px;
+}
+
+.profile-section h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding: 0 12px;
+    color: #666;
+}
+
+.profile-menu {
+    list-style: none;
+}
+
+.app-version {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 16px;
 }
 
 /* Main content styles */
@@ -130,8 +190,8 @@ body {
     position: relative;
     background-color: #f5f7fb;
     margin-left: 0;
-    /* No margin since sidebar is hidden */
-    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* No margin since sidebar is hidden on mobile */
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
 }
 
 .main-content--sidebar-open {
@@ -147,6 +207,7 @@ body {
     background-color: #ffffff;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     z-index: 10;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .menu-toggle {
@@ -157,11 +218,11 @@ body {
     color: #1a1a1a;
     width: 36px;
     height: 36px;
-    border-radius: 6px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, color 0.3s ease;
 }
 
 .menu-toggle:hover {
@@ -171,6 +232,7 @@ body {
 .chat-header h1 {
     font-size: 18px;
     font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 /* Conversation area */
@@ -210,8 +272,8 @@ body {
 }
 
 .turn-avatar {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
@@ -220,20 +282,16 @@ body {
     justify-content: center;
 }
 
-.turn-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .turn-avatar--ai {
     background-color: #0084ff;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .turn-avatar--user {
     background-color: #e4e6e9;
+    color: #666;
+    font-size: 16px;
 }
 
 .turn-content {
@@ -241,9 +299,10 @@ body {
 }
 
 .turn-content--user .message-content {
-    background-color: #ffffff;
-    color: #1a1a1a;
+    background-color: #0084ff;
+    color: white;
     border-radius: 18px;
+    border-top-right-radius: 4px;
     padding: 12px 16px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -253,15 +312,18 @@ body {
 }
 
 .turn-content--ai .message-content {
-    background-color: #DCE7F3;
-    color: #333333;
+    background-color: #ffffff;
+    color: #1a1a1a;
     border-radius: 18px;
+    border-top-left-radius: 4px;
     padding: 12px 16px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     position: relative;
     font-size: 15px;
     line-height: 1.5;
     max-width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .answered-by {
@@ -269,6 +331,7 @@ body {
     color: #65676b;
     margin-top: 6px;
     margin-left: 8px;
+    transition: color 0.3s ease;
 }
 
 .ai-name {
@@ -276,6 +339,7 @@ body {
     padding: 2px 8px;
     border-radius: 12px;
     font-weight: 500;
+    transition: background-color 0.3s ease;
 }
 
 /* Think dropdown */
@@ -288,6 +352,7 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     display: none;
     /* Hidden by default, shown when has-content class is added */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .think-dropdown.has-content {
@@ -367,6 +432,7 @@ body {
     gap: 4px;
     background-color: #0084ff;
     border-radius: 18px;
+    border-top-left-radius: 4px;
     padding: 12px 16px;
     width: fit-content;
 }
@@ -393,13 +459,9 @@ body {
 }
 
 @keyframes bounce {
-
-    0%,
-    60%,
-    100% {
+    0%, 60%, 100% {
         transform: translateY(0);
     }
-
     30% {
         transform: translateY(-5px);
     }
@@ -415,8 +477,15 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     opacity: 0;
     transform: translateY(10px);
-    animation: fadeIn 0.3s forwards;
-    animation-delay: 0.2s;
+    animation: slideUp 0.4s forwards;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .job-listing__title {
@@ -424,12 +493,14 @@ body {
     font-weight: 600;
     margin-bottom: 8px;
     color: #1a1a1a;
+    transition: color 0.3s ease;
 }
 
 .job-listing__company {
     font-size: 14px;
     color: #444;
     margin-bottom: 8px;
+    transition: color 0.3s ease;
 }
 
 .job-listing__location,
@@ -437,6 +508,7 @@ body {
     font-size: 13px;
     color: #65676b;
     margin-bottom: 8px;
+    transition: color 0.3s ease;
 }
 
 .job-listing__link {
@@ -448,12 +520,16 @@ body {
     text-decoration: none;
     font-size: 13px;
     margin-top: 8px;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s;
     font-weight: 500;
 }
 
 .job-listing__link:hover {
     background-color: #0073e6;
+}
+
+.job-listing__link:active {
+    transform: scale(0.98);
 }
 
 /* Map container styles */
@@ -465,8 +541,8 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     opacity: 0;
     transform: translateY(10px);
-    animation: fadeIn 0.3s forwards;
-    animation-delay: 0.2s;
+    animation: slideUp 0.4s forwards;
+    transition: background-color 0.3s ease;
 }
 
 .map-container__title {
@@ -474,6 +550,7 @@ body {
     font-weight: 600;
     margin-bottom: 12px;
     color: #1a1a1a;
+    transition: color 0.3s ease;
 }
 
 .map-container__map {
@@ -482,6 +559,7 @@ body {
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Input area */
@@ -491,6 +569,7 @@ body {
     position: relative;
     z-index: 10;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .input-container {
@@ -500,7 +579,7 @@ body {
     padding: 8px 16px;
     background-color: #ffffff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s ease;
 }
 
 .input-container:focus-within {
@@ -519,9 +598,11 @@ body {
     font-family: inherit;
     line-height: 1.5;
     background-color: transparent;
+    color: #1a1a1a;
+    transition: color 0.3s ease;
 }
 
-.input-container button {
+.send-button {
     background: none;
     border: none;
     color: #0084ff;
@@ -532,15 +613,28 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.2s;
+    transition: color 0.2s, background-color 0.2s, transform 0.1s;
     border-radius: 50%;
     width: 36px;
     height: 36px;
 }
 
-.input-container button:hover {
+.send-button:hover {
     color: #0073e6;
     background-color: rgba(0, 132, 255, 0.1);
+}
+
+.send-button:active {
+    transform: scale(0.95);
+}
+
+.send-button:disabled {
+    color: #c4c4c4;
+    cursor: not-allowed;
+}
+
+.send-button:disabled:hover {
+    background-color: transparent;
 }
 
 .disclaimer {
@@ -548,6 +642,7 @@ body {
     font-size: 12px;
     color: #65676b;
     margin-top: 12px;
+    transition: color 0.3s ease;
 }
 
 /* Dark mode */
@@ -572,6 +667,14 @@ body.dark-mode .chat-header {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+body.dark-mode .menu-toggle {
+    color: #f5f7fb;
+}
+
+body.dark-mode .menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 body.dark-mode .input-area {
     background-color: #2d2d2d;
     border-color: rgba(255, 255, 255, 0.1);
@@ -586,9 +689,14 @@ body.dark-mode .input-container textarea {
     color: #f5f7fb;
 }
 
-body.dark-mode .turn-content--user .message-content {
+body.dark-mode .input-container textarea::placeholder {
+    color: #a0a0a0;
+}
+
+body.dark-mode .turn-content--ai .message-content {
     background-color: #3d3d3d;
     color: #f5f7fb;
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 body.dark-mode .turn-avatar--user {
@@ -620,17 +728,185 @@ body.dark-mode .map-container {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+body.dark-mode .job-listing__title {
+    color: #f5f7fb;
+}
+
+body.dark-mode .job-listing__company {
+    color: #e4e6e9;
+}
+
+body.dark-mode .job-listing__location,
+body.dark-mode .job-listing__salary {
+    color: #a0a0a0;
+}
+
+body.dark-mode .map-container__title {
+    color: #f5f7fb;
+}
+
 body.dark-mode .map-container__map {
     background-color: #3d3d3d;
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode .new-chat-btn,
-body.dark-mode .conversation-item:hover,
-body.dark-mode .conversation-item--active,
-body.dark-mode .theme-toggle:hover,
-body.dark-mode .user-profile:hover {
+body.dark-mode .new-chat-btn {
     background-color: #3d3d3d;
+    color: #f5f7fb;
+}
+
+body.dark-mode .new-chat-btn:hover {
+    background-color: #4d4d4d;
+}
+
+body.dark-mode .conversation-item:hover {
+    background-color: #3d3d3d;
+}
+
+body.dark-mode .conversation-item--active {
+    background-color: #0073e6;
+    color: #ffffff;
+}
+
+body.dark-mode .theme-toggle:hover,
+body.dark-mode .profile-menu li:hover {
+    background-color: #3d3d3d;
+}
+
+body.dark-mode .ai-name {
+    background-color: #4d4d4d;
+    color: #e4e6e9;
+}
+
+body.dark-mode .user-avatar {
+    background-color: #4d4d4d;
+    color: #e4e6e9;
+}
+
+body.dark-mode .user-email,
+body.dark-mode .profile-section h4,
+body.dark-mode .app-version {
+    color: #a0a0a0;
+}
+
+body.dark-mode .disclaimer {
+    color: #a0a0a0;
+}
+
+/* Markdown content styling */
+.message-content {
+    font-size: 1rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+}
+
+/* Headings in message content */
+.message-content h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 16px;
+}
+
+.message-content h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+    margin-top: 14px;
+}
+
+.message-content h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 12px;
+}
+
+/* Bold and Italic */
+.message-content strong {
+    font-weight: bold;
+}
+
+.message-content em {
+    font-style: italic;
+}
+
+/* Links */
+.message-content a {
+    color: #0084ff;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.message-content a:hover {
+    text-decoration: underline;
+    color: #0073e6;
+}
+
+body.dark-mode .message-content a {
+    color: #60a5fa;
+}
+
+/* Lists */
+.message-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.message-content ol {
+    list-style-type: decimal;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.message-content li {
+    margin-bottom: 4px;
+}
+
+/* Blockquotes */
+.message-content blockquote {
+    border-left: 4px solid #e4e6e9;
+    padding: 10px;
+    margin: 10px 0;
+    background: #f8f8f8;
+    font-style: italic;
+    color: #555;
+    border-radius: 0 4px 4px 0;
+}
+
+body.dark-mode .message-content blockquote {
+    border-left-color: #4d4d4d;
+    background: #2d2d2d;
+    color: #a0a0a0;
+}
+
+/* Code blocks */
+.message-content pre {
+    background: #282c34;
+    color: #f8f8f2;
+    padding: 12px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    margin: 10px 0;
+}
+
+.message-content code {
+    background: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+body.dark-mode .message-content code {
+    background: #3d3d3d;
+    color: #e4e6e9;
 }
 
 /* Responsive styles */
@@ -650,141 +926,56 @@ body.dark-mode .user-profile:hover {
     .main-content--sidebar-open {
         margin-left: 0;
     }
-}
-
-
-/* General message styling */
-.message-content {
-    font-size: 1rem;
-    line-height: 1.5;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    max-width: 100%;
-}
-
-/* Headings */
-.message-content h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.message-content h2 {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 6px;
-}
-
-.message-content h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-/* Bold and Italic */
-.message-content strong {
-    font-weight: bold;
-}
-
-.message-content em {
-    font-style: italic;
-}
-
-/* Links */
-.message-content a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.message-content a:hover {
-    text-decoration: underline;
-}
-
-/* Lists */
-.message-content ul {
-    list-style-type: disc;
-    margin-left: 20px;
-}
-
-.message-content ol {
-    list-style-type: decimal;
-    margin-left: 20px;
-}
-
-/* Blockquotes */
-.message-content blockquote {
-    border-left: 4px solid #ccc;
-    padding: 10px;
-    margin: 10px 0;
-    background: #f8f8f8;
-    font-style: italic;
-    color: #555;
-}
-
-/* Code blocks */
-.message-content pre {
-    background: #282c34;
-    color: #f8f8f2;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    white-space: pre-wrap;
-}
-
-.message-content code {
-    background: #f4f4f4;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-}
-
-/* Citations */
-.citations {
-    margin-top: 10px;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.citation {
-    display: block;
-    margin-top: 5px;
-    font-style: italic;
-}
-
-
-/* Add these to your styles.css file */
-.sidebar {
-    /* Default state - hidden on mobile */
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    z-index: 100;
-    /* other styling properties */
-}
-
-.sidebar--open {
-    transform: translateX(0);
-}
-
-.main-content--sidebar-open {
-    /* Add margin or transform to make room for sidebar when open */
-    margin-left: 250px; /* Adjust based on your sidebar width */
+    
+    .sidebar {
+        width: 280px;
+    }
 }
 
 @media (min-width: 769px) {
     .sidebar {
-        /* Desktop state */
         transform: translateX(0);
         position: relative;
     }
     
     .main-content {
-        margin-left: 250px; /* Adjust based on your sidebar width */
+        margin-left: 260px;
     }
+    
+    .menu-toggle {
+        display: none;
+    }
+}
+
+/* Animations for staggered job listings */
+.job-listing:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.job-listing:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.job-listing:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.job-listing:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.job-listing:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+/* Focus states for accessibility */
+button:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #0084ff;
+    outline-offset: 2px;
+}
+
+body.dark-mode button:focus-visible,
+body.dark-mode textarea:focus-visible {
+    outline-color: #60a5fa;
 }

@@ -15,7 +15,7 @@ def create_app():
         mongo.init_app(app)
         login_manager.init_app(app)
         
-        login_manager.login_view = "google_login"
+        login_manager.login_view = "auth.google_login"
 
 
         from app.routes import auth_bp

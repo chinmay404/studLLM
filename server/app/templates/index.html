@@ -7,21 +7,21 @@
     <title>AI Chat Interface</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="app-container">
-        <!-- Sidebar (hidden by default) -->
+        <!-- Sidebar (hidden by default on mobile) -->
         <aside class="sidebar">
             <div class="sidebar__header">
                 <div class="user-profile-header">
-                    <img id="userProfileImage" src="{{ url_for('static', filename='default-avatar.png') }}"
-                        alt="User Profile">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
                     <div class="user-info">
-                        <span id="userName">{{ user.name if user else 'Guest' }}</span>
-                        <span id="userEmail" class="user-email">{{ user.email if user else '' }}</span>
+                        <span id="userName">Guest User</span>
+                        <span id="userEmail" class="user-email">guest@example.com</span>
                     </div>
                 </div>
                 <button class="new-chat-btn">
@@ -59,6 +59,7 @@
                         <li><i class="fas fa-sign-out-alt"></i> Logout</li>
                     </ul>
                 </div>
+                <div class="app-version">studLLM v1.0.0</div>
             </div>
         </aside>
 
@@ -78,7 +79,7 @@
             <div class="input-area">
                 <div class="input-container">
                     <textarea id="userInput" placeholder="Message AI assistant..." rows="1"></textarea>
-                    <button id="sendButton">
+                    <button id="sendButton" class="send-button">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
@@ -95,7 +96,7 @@
                 <div class="message-content"></div>
             </div>
             <div class="turn-avatar turn-avatar--user">
-                <img src="/placeholder.svg?height=40&width=40" alt="User">
+                <i class="fas fa-user"></i>
             </div>
         </div>
     </template>
@@ -157,7 +158,6 @@
         </div>
     </template>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
-
     <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 

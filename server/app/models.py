@@ -37,4 +37,4 @@ class User(UserMixin):
                 "last_login": datetime.now()
             })
 
-        return User(user_id, name, email)
+        return User(user_id, name, email , profile_pic)

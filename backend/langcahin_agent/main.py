@@ -4,7 +4,6 @@ from langchain.agents import AgentExecutor, create_react_agent
 from .helpers.get_llm import LLM
 from .tools.tools import tools_list
 from .helpers.load_prompt import load_prompt_from_yaml
-from .tools.state_tool import get_user_state_
 from langgraph.graph import MessagesState
 from langchain_core.messages import HumanMessage, SystemMessage, AnyMessage
 from langgraph.prebuilt import create_react_agent
@@ -17,7 +16,9 @@ from langgraph.graph.message import add_messages
 from langgraph.prebuilt import tool_node, tools_condition, tool_validator, ToolNode
 from langgraph.checkpoint.memory import MemorySaver
 from .helpers.load_prompt import load_prompt_from_yaml
+from DB_ops.main import MongoCRUD
 
+db = MongoCRUD()
 
 class State(MessagesState):
     pass
@@ -49,8 +50,9 @@ class getGraphResponse():
         graph = builder.compile(checkpointer=self.memory)
         return graph
 
-    def get_response(self, query: str, config: dict):
-        human_message = [HumanMessage(content=query)]
+    def get_response(self, query: str, config: dict , user_id: str):
+        user_current_state = db.get_user_state(user_id)
+        human_message = [HumanMessage(content=query + "USER ID : " + user_id + "User Current State" + str(user_current_state))]
         res = self.graph.invoke({"messages": human_message}, config)
         messages = res.get("messages", [])
         for msg in reversed(messages):

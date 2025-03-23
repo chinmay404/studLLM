@@ -1,6 +1,7 @@
 from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_core.tools import tool
 import time
+from datetime import datetime
 import yaml
 import sys
 sys.path.append("..")
@@ -23,25 +24,24 @@ def update_state(user_id: str,
         next_state (str): The next state of the user.
 
     Returns:
-        int: The number of documents updated (should be 1 if successful, 0 if no user found).
+        int: 1 if successful, 0 if failed.
     """
-    update_data = {
-        "$push": {
-            "state": {
-                "current": current_state,
-                "updated_by": "LLM",
-                "updated_at": time.time(),
-                "next_state": next_state
-            }
-        }
+    existing_state = db.get_user_state(user_id)
+    
+    timestamp = {"$date": datetime.now().isoformat()}
+    new_state = {
+        "current": next_state,
+        "previous": current_state,
+        "updated_by": updated_by,
+        "updated_at": timestamp
     }
-
-    result = db.update_user_state({"user_id": user_id}, update_data ,upsert=True)
-    return result if result else None
+    
+    result = db.update_user_state(user_id, new_state)
+    return result
 
 
 @tool
-def get_user_state(user_id :str) -> dict | None:
+def get_user_state(user_id: str) -> dict | None:
     """Retrieve the current state of a user.
 
     Args:
@@ -50,26 +50,44 @@ def get_user_state(user_id :str) -> dict | None:
     Returns:
         dict: The state of the user if found, otherwise None.
     """
-    user_data = db.read_user_state({"user_id": user_id})
-
-    if user_data:
-        return user_data[0].get("state", {})
-    return None
+    state = db.get_user_state(user_id)
+    return state if state else None
 
 
-
-
-def get_user_state_(user_id :str) -> dict | None:
-    """Retrieve the current state of a user.
+@tool
+def get_user_state_history(user_id: str) -> list | None:
+    """Retrieve the state history of a user.
 
     Args:
-        user_id (str): The user ID to fetch the state for.
+        user_id (str): The user ID to fetch the state history for.
 
     Returns:
-        dict: The state of the user if found, otherwise None.
+        list: The state history of the user if found, otherwise None.
     """
-    user_data = db.read_user_state({"user_id": user_id})
-    print("user_data : ", user_data)    
-    if user_data:
-        return user_data[0].get("state_history", [])
+    user = db.get_user(user_id)
+    if user and "state_history" in user:
+        return user["state_history"]
     return None
+
+
+@tool
+def create_initial_state(user_id: str, initial_state: str) -> int | None:
+    """Create an initial state for a user if none exists.
+
+    Args:
+        user_id (str): The user ID to create initial state for.
+        initial_state (str): The initial state to set.
+
+    Returns:
+        int: 1 if successful, 0 if failed.
+    """
+    timestamp = {"$date": datetime.now().isoformat()}
+    state_data = {
+        "current": initial_state,
+        "updated_by": "System",
+        "updated_at": timestamp
+    }
+    
+    # This will create a state if it doesn't exist
+    result = db.get_or_create_user_state(user_id, state_data)
+    return 1 if result else 0
