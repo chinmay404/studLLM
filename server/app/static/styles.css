@@ -194,9 +194,9 @@ body {
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
 }
 
-.main-content--sidebar-open {
+/* .main-content--sidebar-open {
     margin-left: 260px;
-}
+} */
 
 .chat-header {
     padding: 16px 24px;
@@ -938,9 +938,9 @@ body.dark-mode .message-content code {
         position: relative;
     }
     
-    .main-content {
+    /* .main-content {
         margin-left: 260px;
-    }
+    } */
     
     .menu-toggle {
         display: none;
