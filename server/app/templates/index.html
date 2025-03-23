@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chat Interface</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -16,6 +16,14 @@
         <!-- Sidebar (hidden by default) -->
         <aside class="sidebar">
             <div class="sidebar__header">
+                <div class="user-profile-header">
+                    <img id="userProfileImage" src="{{ url_for('static', filename='default-avatar.png') }}"
+                        alt="User Profile">
+                    <div class="user-info">
+                        <span id="userName">{{ user.name if user else 'Guest' }}</span>
+                        <span id="userEmail" class="user-email">{{ user.email if user else '' }}</span>
+                    </div>
+                </div>
                 <button class="new-chat-btn">
                     <i class="fas fa-plus"></i>
                     New chat
@@ -42,9 +50,14 @@
                     <i class="fas fa-moon"></i>
                     <span>Dark mode</span>
                 </div>
-                <div class="user-profile">
-                    <img src="/placeholder.svg?height=30&width=30" alt="User">
-                    <span>User Account</span>
+                <div class="profile-section">
+                    <h4>My Profile</h4>
+                    <ul class="profile-menu">
+                        <li><i class="fas fa-user-circle"></i> View Profile</li>
+                        <li><i class="fas fa-history"></i> Chat History</li>
+                        <li><i class="fas fa-cog"></i> Settings</li>
+                        <li><i class="fas fa-sign-out-alt"></i> Logout</li>
+                    </ul>
                 </div>
             </div>
         </aside>
@@ -81,9 +94,9 @@
             <div class="turn-content turn-content--user">
                 <div class="message-content"></div>
             </div>
-            <!-- <div class="turn-avatar turn-avatar--user">
+            <div class="turn-avatar turn-avatar--user">
                 <img src="/placeholder.svg?height=40&width=40" alt="User">
-            </div> -->
+            </div>
         </div>
     </template>
 
@@ -145,7 +158,7 @@
     </template>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
 
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 
 </html>

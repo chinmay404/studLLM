@@ -268,8 +268,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function addAITurn(text, citations = []) {
         const turnElement = aiTurnTemplate.content.cloneNode(true);
-        turnElement.querySelector('.message-content').textContent = text;
         
+        // Convert Markdown to HTML
+        turnElement.querySelector('.message-content').innerHTML = marked.parse(text);
+    
         // Add citations if any
         if (citations.length > 0) {
             const citationsContainer = turnElement.querySelector('.citations');
@@ -280,12 +282,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 citationsContainer.appendChild(citationElement);
             });
         }
-        
+    
         conversation.appendChild(turnElement);
         scrollToBottom();
-        
+    
         return turnElement.querySelector('.turn-content');
     }
+    
     
     function addJobListings(aiTurnContent, count = 3) {
         const listings = sampleJobListings.slice(0, count);

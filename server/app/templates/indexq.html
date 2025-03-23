@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FastAPI SSE Example</title>
+</head>
+<body>
+    <h1>Server-Sent Events with FastAPI</h1>
+    <div id="events">Waiting for events...</div>
+
+    <script>
+        const eventSource = new EventSource("http://127.0.0.1:8000/stream");
+        eventSource.onmessage = function(event) {
+            console.log("Event received: " + event.data);
+            const newElement = document.createElement("div");
+            newElement.innerHTML = "Event received: " + event.data;
+            document.getElementById("events").appendChild(newElement);
+        };
+    </script>
+</body>
+</html> 

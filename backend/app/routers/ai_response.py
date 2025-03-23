@@ -10,10 +10,15 @@ router = APIRouter()
 async def chat(request: ChatRequest):
     try:
         query = request.message
-        responset = graph.get_response(query)
-        response_text = responset.content
-        message = response_text.split("</think>")[1]
-        thinking = response_text.split("</think>")[0]
+        config = {"configurable": {"thread_id": "1231"}}       # This is a dummy config in actual implementation this will be dynamic and based on the user
+        responset = graph.get_response(query , config)
+        try:
+            response_text = responset.content
+            message = response_text.split("</think>")[1]
+            thinking = response_text.split("</think>")[0]
+        except:
+            message = responset
+            thinking = ""
         return {"message": message , "Thinking" : thinking}
 
 
