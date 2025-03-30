@@ -1,54 +1,77 @@
-# Studllm Crew
+# StudLLM -AI Chatbot Platform (Langgraph)  - Under Development 
 
-Welcome to the Studllm Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+![Screenshot 2025-03-24 011548](https://github.com/user-attachments/assets/08de1351-2ee3-4416-b635-5ff58cca0087)
+![Screenshot 2025-03-24 012101](https://github.com/user-attachments/assets/1f28e4d8-6d25-476e-95fb-a8d7279143e4)
 
-## Installation
 
-Ensure you have Python >=3.10 <=3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+An AI-powered chatbot platform designed with a modular architecture to ensure scalability and flexibility. The system consists of two primary servers: a **Flask Server** for frontend and user interactions, and a **FastAPI Server** for handling Large Language Model (LLM) processes. This design allows seamless integration, personalized user experiences, and future expansion to accommodate multiple clients.
 
-First, if you haven't already, install uv:
+## System Architecture
 
-```bash
-pip install uv
-```
+The platform utilizes a modular design, where:
 
-Next, navigate to your project directory and install the dependencies:
+- **Flask Server** handles user interactions and communicates with the backend.
+- **FastAPI Server** processes chat inputs and responses, manages user states, and delivers LLM responses based on dynamic user contexts.
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+This architecture allows for multiple client interactions (web, mobile) without needing to redefine APIs, ensuring scalability for future growth.
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+## Backend Implementation
 
-- Modify `src/studllm/config/agents.yaml` to define your agents
-- Modify `src/studllm/config/tasks.yaml` to define your tasks
-- Modify `src/studllm/crew.py` to add your own logic, tools and specific args
-- Modify `src/studllm/main.py` to add custom inputs for your agents and tasks
+### FastAPI Server
 
-## Running the Project
+- **Chat Processing**: Handles chat input and generates responses Using Langgraph.
+- **State Management**: Maintains user states, tailoring the LLM response based on the user's current state (e.g., if the user is new, the chatbot adjusts its approach accordingly).
+- **Personalization**: The LLM stores key user information for personalized interactions.
+- **Entity Memory Graph**: Planned future development to enhance LLM's context-awareness and memory handling.
 
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+### Flask Server
 
-```bash
-$ crewai run
-```
+- **Integration**: Connects to the FastAPI backend to display chatbot responses.
+- **User Authentication**: Uses Google OAuth 2 for user authentication.
+- **UI**: The frontend showcases user interaction through UI screenshots.
 
-This command initializes the studLLM Crew, assembling the agents and assigning them tasks as defined in your configuration.
+## AI Features
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+### Intelligent Search & Discovery
+- **search** – Find what you need instantly.
+- **location_finder** – Discover places near you.
+- **news_search** – Get the latest news in a snap.
+- **places_search** – Explore places around the world.
+- **flight_search** – Search for flights with ease.
+- **google_scholar_search** – Look up scholarly articles effortlessly.
 
-## Understanding Your Crew
+### User State & Personalization
+- **update_state** – Keep track of user states.
+- **get_user_state** – Retrieve user status anytime.
+- **get_user_state_history** – Access past user interactions.
 
-The studLLM Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+### User Information Management
+- **set_things_about_user** – Save important details about users.
+- **get_things_about_user** – Retrieve stored user information.
+- **update_things_about_user** – Keep user details up to date.
+- **add_single_thing_about_user** – Add new details about a user.
+- **check_if_user_has_thing** – Verify if a user has specific information stored.
 
-## Support
+## Database Implementation
 
-For support, questions, or feedback regarding the Studllm Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+The platform uses **MongoDB** to store:
+- User sessions
+- Chat history
+- User states
 
-Let's create wonders together with the power and simplicity of crewAI.
+This setup ensures that the chatbot retains memory of past interactions and can provide more personalized conversations.
+
+## Frontend Implementation
+
+The frontend of the AI chatbot platform is built using:
+- **HTML**
+- **CSS**
+- **JavaScript**
+
+This stack ensures a responsive and user-friendly interface for seamless chatbot interaction.
+
+## File Structure
+
+The project structure is as follows:
+
+
